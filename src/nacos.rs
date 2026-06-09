@@ -27,7 +27,7 @@ impl NacosDiscover {
     ///  // first new a NacosNamingAndConfigData
     ///  use std::sync::Arc;
     ///  use pd_rs_common::svc::nacos::NacosNamingAndConfigData;
-    ///  use volo_nacos_discover::NacosDiscover;
+    ///  use volo_nacos_discover::nacos::NacosDiscover;
     ///  let nacos_data = Arc::new(
     ///      NacosNamingAndConfigData::new(
     ///          "127.0.0.1:8848".to_string(),  // nacos server addr.
@@ -176,66 +176,66 @@ impl Discover for NacosDiscover {
 
 #[cfg(test)]
 mod tests {
-    // use crate::context::Endpoint;
-    // use crate::discovery::nacos::NacosDiscover;
-    // use crate::discovery::{Discover, Instance};
-    // use crate::net::Address;
-    // use pd_rs_common::svc::nacos::NacosNamingAndConfigData;
-    // use std::sync::Arc;
+    use volo::context::Endpoint;
+    use crate::nacos::NacosDiscover;
+    use volo::discovery::{Discover, Instance};
+    use volo::net::Address;
+    use pd_rs_common::svc::nacos::NacosNamingAndConfigData;
+    use std::sync::Arc;
 
     #[tokio::test]
     async fn test_nacos_discover() {
         // test with local environment
-        // let _g = pd_rs_common::logger::init_tracing();
-        //
-        // let nacos_data_ret = NacosNamingAndConfigData::new(
-        //     "10.64.132.20:8848".to_string(),
-        //     "public".to_string(),
-        //     "volo-nacos-test".to_string(),
-        //     None,
-        //     None,
-        // );
-        // let nacos_data = match nacos_data_ret {
-        //     Ok(data) => data,
-        //     Err(e) => panic!("{:?}", e),
-        // };
-        // let nacos_data = Arc::new(nacos_data);
-        //
-        // let _inst1 = nacos_data
-        //     .register_service(
-        //         "svc1".to_string(),
-        //         8080,
-        //         Some("172.1.0.1".to_string()),
-        //         None,
-        //         Default::default(),
-        //     )
-        //     .await
-        //     .unwrap();
-        //
-        // assert_eq!(_inst1.len(), 1);
-        //
-        // nacos_data
-        //     .subscribe_service("svc1".to_string())
-        //     .await
-        //     .unwrap();
-        //
-        //
-        // // waiting for service change event.
-        // let s = tokio::spawn(async move {
-        //     tokio::time::sleep(tokio::time::Duration::from_secs(10)).await;
-        // });
-        //
-        // tokio::join!(s);
-        //
-        // let nacos_discover = NacosDiscover::new(nacos_data);
-        // let endpoint = Endpoint::new("svc1".into());
-        // let resp = nacos_discover.discover(&endpoint).await.unwrap();
-        //
-        // let expected = vec![Arc::new(Instance {
-        //     address: Address::Ip("172.1.0.1:8080".parse().unwrap()),
-        //     weight: 1,
-        //     tags: Default::default(),
-        // })];
-        // assert_eq!(resp, expected);
+        let _g = pd_rs_common::logger::init_tracing();
+
+        let nacos_data_ret = NacosNamingAndConfigData::new(
+            "10.64.132.20:8848".to_string(),
+            "public".to_string(),
+            "volo-nacos-test".to_string(),
+            None,
+            None,
+        );
+        let nacos_data = match nacos_data_ret {
+            Ok(data) => data,
+            Err(e) => panic!("{:?}", e),
+        };
+        let nacos_data = Arc::new(nacos_data);
+
+        let _inst1 = nacos_data
+            .register_service(
+                "svc1".to_string(),
+                8080,
+                Some("172.1.0.1".to_string()),
+                None,
+                Default::default(),
+            )
+            .await
+            .unwrap();
+
+        assert_eq!(_inst1.len(), 1);
+
+        nacos_data
+            .subscribe_service("svc1".to_string())
+            .await
+            .unwrap();
+
+
+        // waiting for service change event.
+        let s = tokio::spawn(async move {
+            tokio::time::sleep(tokio::time::Duration::from_secs(10)).await;
+        });
+
+        tokio::join!(s);
+
+        let nacos_discover = NacosDiscover::new(nacos_data);
+        let endpoint = Endpoint::new("svc1".into());
+        let resp = nacos_discover.discover(&endpoint).await.unwrap();
+
+        let expected = vec![Arc::new(Instance {
+            address: Address::Ip("172.1.0.1:8080".parse().unwrap()),
+            weight: 1,
+            tags: Default::default(),
+        })];
+        assert_eq!(resp, expected);
     }
 }

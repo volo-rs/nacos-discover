@@ -4,7 +4,7 @@
 // first new a NacosNamingAndConfigData
 use std::sync::Arc;
 use pd_rs_common::svc::nacos::NacosNamingAndConfigData;
-use volo_nacos_discover::NacosDiscover;
+use volo_nacos_discover::nacos::NacosDiscover;
 let nacos_data = Arc::new(
     NacosNamingAndConfigData::new(
         "127.0.0.1:8848".to_string(),  // nacos server addr.
