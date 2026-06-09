@@ -394,7 +394,7 @@ mod tests {
         let _g = pd_rs_common::logger::init_tracing(Some(5), None);
 
         let nacos_data = NacosNamingAndConfigData::new(
-            "10.64.132.20:8848".to_string(),
+            "127.0.0.1:8848".to_string(),
             "public".to_string(),
             "volo-nacos-test".to_string(),
             None,
