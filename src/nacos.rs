@@ -1,26 +1,25 @@
-use volo::context::Endpoint;
-use volo::discovery::{diff_address, Change, Discover, Instance};
-use volo::loadbalance::error::LoadBalanceError;
-use volo::net;
-use volo::net::Address;
 use anyhow::anyhow;
 use async_broadcast::{Receiver, RecvError};
+use dashmap::DashMap;
 use faststr::FastStr;
 use pd_rs_common::svc::nacos::NacosNamingAndConfigData;
 use std::sync::Arc;
-use dashmap::DashMap;
 use tracing::warn;
+use volo::context::Endpoint;
+use volo::discovery::{Change, Discover, Instance, diff_address};
+use volo::loadbalance::error::LoadBalanceError;
+use volo::net;
+use volo::net::Address;
 
 #[derive(Clone)]
 pub struct NacosDiscover {
     pub nacos_naming_data: Arc<NacosNamingAndConfigData>,
     pub svc_change_sender: async_broadcast::Sender<Change<FastStr>>,
     pub svc_change_receiver: async_broadcast::Receiver<Change<FastStr>>,
-    pub current_svc_instance: Arc<DashMap<FastStr, Vec<Arc<Instance>>>>
+    pub current_svc_instance: Arc<DashMap<FastStr, Vec<Arc<Instance>>>>,
 }
 
 impl NacosDiscover {
-
     /// # create a nacos discover
     /// # Examples
     /// ```rust
@@ -176,14 +175,15 @@ impl Discover for NacosDiscover {
 
 #[cfg(test)]
 mod tests {
-    use volo::context::Endpoint;
     use crate::nacos::NacosDiscover;
-    use volo::discovery::{Discover, Instance};
-    use volo::net::Address;
     use pd_rs_common::svc::nacos::NacosNamingAndConfigData;
     use std::sync::Arc;
+    use volo::context::Endpoint;
+    use volo::discovery::{Discover, Instance};
+    use volo::net::Address;
 
     #[tokio::test]
+    #[ignore]
     async fn test_nacos_discover() {
         // test with local environment
         let _g = pd_rs_common::logger::init_tracing();
@@ -218,7 +218,6 @@ mod tests {
             .subscribe_service("svc1".to_string())
             .await
             .unwrap();
-
 
         // waiting for service change event.
         let s = tokio::spawn(async move {
