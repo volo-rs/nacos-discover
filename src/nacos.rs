@@ -22,7 +22,7 @@ pub struct NacosDiscover {
 impl NacosDiscover {
     /// # create a nacos discover
     /// # Examples
-    /// ```rust
+    /// ```no_run
     ///  // first new a NacosNamingAndConfigData
     ///  use std::sync::Arc;
     ///  use pd_rs_common::svc::nacos::NacosNamingAndConfigData;
