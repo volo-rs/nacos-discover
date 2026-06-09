@@ -1,0 +1,26 @@
+[package]
+name = "volo-nacos-discover"
+version = "0.1.0"
+edition = "2024"
+authors = [
+    "intfish123 <intfish@qq.com>",
+]
+description = "Nacos discover for volo"
+documentation = "https://docs.rs/volo-nascos-discover"
+repository = "https://github.com/volo-rs/nacos-discover.git"
+readme = "README.md"
+keywords = ["rust", "volo", "nacos", "discover"]
+license = "MIT"
+
+[badges]
+maintenance = { status = "actively-developed" }
+
+[dependencies]
+volo = "0.12"
+tracing = "0.1"
+tokio = { version = "1", features = ["full"] }
+async-broadcast = "0.7"
+faststr = "0.2"
+anyhow = "1"
+dashmap = { version = "6.1", features = ["serde"] }
+pd-rs-common = { version = "0.1" }
