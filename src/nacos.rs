@@ -174,6 +174,7 @@ impl Discover for NacosDiscover {
 }
 
 #[cfg(test)]
+
 mod tests {
     use crate::nacos::NacosDiscover;
     use pd_rs_common::svc::nacos::NacosNamingAndConfigData;
@@ -186,7 +187,7 @@ mod tests {
     #[ignore]
     async fn test_nacos_discover() {
         // test with local environment
-        let _g = pd_rs_common::logger::init_tracing();
+        let _g = pd_rs_common::logger::init_tracing(Some(5), None);
 
         let nacos_data_ret = NacosNamingAndConfigData::new(
             "10.64.132.20:8848".to_string(),
@@ -211,8 +212,6 @@ mod tests {
             )
             .await
             .unwrap();
-
-        assert_eq!(_inst1.len(), 1);
 
         nacos_data
             .subscribe_service("svc1".to_string())

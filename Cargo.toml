@@ -23,4 +23,4 @@ async-broadcast = "0.7"
 faststr = "0.2"
 anyhow = "1"
 dashmap = { version = "6.1", features = ["serde"] }
-pd-rs-common = { version = "0.1" }
+pd-rs-common = { version = "0.2" }
