@@ -6,7 +6,7 @@ authors = [
     "intfish123 <intfish@qq.com>",
 ]
 description = "Nacos discover for volo"
-documentation = "https://docs.rs/volo-nascos-discover"
+documentation = "https://docs.rs/volo-nacos-discover"
 repository = "https://github.com/volo-rs/nacos-discover.git"
 readme = "README.md"
 keywords = ["rust", "volo", "nacos", "discover"]
