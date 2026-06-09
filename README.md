@@ -1,5 +1,10 @@
 # support nacos discover
 ## usage
+### First add it in cargo.toml
+
+`cargo add volo-nacos-discover`
+
+### Examples
 ```rust
 // first new a NacosNamingAndConfigData
 use std::sync::Arc;
